@@ -17,7 +17,6 @@ public class Main {
 				"TenClub",
 				"KingHeart"				
 		};
-
 		
 		game1.setPlayerHands(playerHands);
 		game1.setCurrentBoard(board);
