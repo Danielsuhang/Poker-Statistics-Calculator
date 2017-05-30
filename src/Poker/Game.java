@@ -1,4 +1,4 @@
-package Poker;
+package poker;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -394,7 +394,7 @@ public class Game {
 					break;
 				}
 			}
-			return "Two Pair " + convertStr(maxTwo) + "s" + " and " + convertStr(secondMaxTwo) + "s -" + twoPairExtra + "-";
+			return "Two Pair --" + (maxTwo) + "--" + " and -" + (secondMaxTwo) + "-        " + twoPairExtra + "      ";
 		}
 		if (two) {
 			int[] twoReturn = new int[5];
@@ -426,19 +426,22 @@ public class Game {
 
 	public int convertInt(String num) {
 		if (num == null) return -1;
-		if (num.contains("Ace")) return 14;   //Acts as essentially 1 or 14 in straight but only 14 in flush
-		if (num.contains("Two")) return 2;
-		if (num.contains("Three")) return 3;
-		if (num.contains("Four")) return 4;
-		if (num.contains("Five")) return 5;
-		if (num.contains("Six")) return 6;
-		if (num.contains("Seven")) return 7;
-		if (num.contains("Eight")) return 8;
-		if (num.contains("Nine")) return 9;
-		if (num.contains("Ten")) return 10;
-		if (num.contains("Jack")) return 11;
-		if (num.contains("Queen")) return 12;
-		if (num.contains("King")) return 13;
+		if (num.contains("Ace") || num.contains("14")) return 14;   //Acts as essentially 1 or 14 in straight but only 14 in flush
+		if (num.contains("Ten") || num.contains("10")) return 10;
+		if (num.contains("Jack") || num.contains("11")) return 11;
+		if (num.contains("Queen") || num.contains("12")) return 12;
+		if (num.contains("King") || num.contains("13")) return 13;
+		if (num.contains("Two") || num.contains("2")) return 2;
+		if (num.contains("Three") || num.contains("3")) return 3;
+		if (num.contains("Four") || num.contains("4")) return 4;
+		if (num.contains("Five") || num.contains("5")) return 5;
+		if (num.contains("Six") || num.contains("6")) return 6;
+		if (num.contains("Seven") || num.contains("7")) return 7;
+		if (num.contains("Eight") || num.contains("8")) return 8;
+		if (num.contains("Nine") || num.contains("6")) return 9;
+	
+		
+		
 		return -1;
 	}
 	public int convertStrAdvanced(String num) {
@@ -577,43 +580,43 @@ public class Game {
 		}
 		
 		//For the pair that goes with a fullHouse
-		if (fullHouse.contains("-14-")) {
+		if (fullHouse.contains(" -14-")) {
 			returnFull[1] = 14;
 		}
-		if (fullHouse.contains("-13-")) {
+		if (fullHouse.contains(" -13-")) {
 			returnFull[1] = 13;
 		}
-		if (fullHouse.contains("-12-")) {
+		if (fullHouse.contains(" -12-")) {
 			returnFull[1] = 12;
 		}
-		if (fullHouse.contains("-11-")) {
+		if (fullHouse.contains(" -11-")) {
 			returnFull[1] = 11;
 		}
-		if (fullHouse.contains("-10-")) {
+		if (fullHouse.contains(" -10-")) {
 			returnFull[1] = 10;
 		}
-		if (fullHouse.contains("-9-")) {
+		if (fullHouse.contains(" -9-")) {
 			returnFull[1] = 9;
 		}
-		if (fullHouse.contains("-8-")) {
+		if (fullHouse.contains(" -8-")) {
 			returnFull[1] = 8;
 		}
-		if (fullHouse.contains("-7-")) {
+		if (fullHouse.contains(" -7-")) {
 			returnFull[1] = 7;
 		}
-		if (fullHouse.contains("-6-")) {
+		if (fullHouse.contains(" -6-")) {
 			returnFull[1] = 6;
 		}
-		if (fullHouse.contains("-5-")) {
+		if (fullHouse.contains(" -5-")) {
 			returnFull[1] = 5;
 		}
-		if (fullHouse.contains("-4-")) {
+		if (fullHouse.contains(" -4-")) {
 			returnFull[1] = 4;
 		}
-		if (fullHouse.contains("-3-")) {
+		if (fullHouse.contains(" -3-")) {
 			returnFull[1] = 3;
 		}
-		if (fullHouse.contains("-2-")) {
+		if (fullHouse.contains(" -2-")) {
 			returnFull[1] = 2;
 		}
 		return returnFull;

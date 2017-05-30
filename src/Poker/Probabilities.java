@@ -1,4 +1,4 @@
-package Poker;
+package poker;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -43,7 +43,7 @@ public class Probabilities {
 	}
 	public void setUpOverallProb() {   
 		//Add a loop here and do this many many times
-		for (int i = 0; i < 10; i++) {
+		for (int i = 0; i < 10000; i++) {
 			boolean tieBool = false; 
 			boolean win = true;
 			game.giveInitial();  //This part of the method keeps giving opponents randomhands
@@ -185,6 +185,96 @@ public class Probabilities {
 				else if (mainStrength.contains("Flush")) {   
 					int[] mainHigh = game.convertHighCards(mainStrength);  
 					int[] competeHigh = game.convertHighCards(competeStrength);
+					int flushArrayChecker = 0;
+					while (flushArrayChecker <= 4) {
+						if (mainHigh[flushArrayChecker] > competeHigh[flushArrayChecker]) {
+							return 1;
+						}
+						else if (mainHigh[flushArrayChecker] < competeHigh[flushArrayChecker]) {
+							return -1;
+						}
+						else {
+							flushArrayChecker++;
+						}
+					}
+					return 0;
+				}
+				else if (mainStrength.contains("Two Pair")) {
+					int[] mainHigh = game.checkFullHouse(mainStrength);  
+					int[] competeHigh = game.checkFullHouse(competeStrength);
+					String newMainStr = mainStrength.substring(24, 35);
+					String newCompeteStr = competeStrength.substring(23, 35);
+					if (mainHigh[0] > competeHigh[0]) {
+						return 1;
+					}
+					else if (mainHigh[0] < competeHigh[0]) {
+						return -1;
+					}
+					else {
+						if (mainHigh[1] > competeHigh[1]) {
+							return 1;
+						}
+						else if (mainHigh[1] < competeHigh[1]) {
+							return -1;   //Three of a kind same, but pair is different
+						}
+						else {
+							if (game.convertInt(newMainStr) > game.convertInt(newCompeteStr)) {
+								return 1;
+							}
+							else if (game.convertInt(newMainStr) < game.convertInt(newCompeteStr)) {
+								return -1;
+							}
+							else {
+								return 0;
+							}
+						}
+					}
+
+
+				}
+				else if (mainStrength.contains("One Pair")) {
+					int mainPair = game.convertInt(mainStrength);
+					int competePair = game.convertInt(competeStrength);
+					int[] mainHigh = game.convertHighCards(mainStrength);  
+					int[] competeHigh = game.convertHighCards(competeStrength);
+					if (mainPair > competePair) {
+						return 1;
+					}
+					else if (mainPair < competePair) {
+						return -1;
+					}
+					else {
+						int onePairArrayChecker = 0;
+						while (onePairArrayChecker <= 3) {
+							if (mainHigh[onePairArrayChecker] > competeHigh[onePairArrayChecker]) {
+								return 1;
+							}
+							else if (mainHigh[onePairArrayChecker] < competeHigh[onePairArrayChecker]) {
+								return -1;
+							}
+							else {
+								onePairArrayChecker++;
+							}
+						}
+						return 0;
+					}
+				}
+				else {  //No hand
+					int[] mainHigh = game.convertHighCards(mainStrength);  
+					int[] competeHigh = game.convertHighCards(competeStrength);
+					int noPairArrayChecker = 6;
+					while (noPairArrayChecker >= 0) {
+						if (mainHigh[noPairArrayChecker] > competeHigh[noPairArrayChecker]) {
+							return 1;
+						}
+						else if (mainHigh[noPairArrayChecker] < competeHigh[noPairArrayChecker]) {
+							return -1;
+						}
+						else {
+							noPairArrayChecker--;
+						}
+					}
+					return 0;
 				}
 
 			}

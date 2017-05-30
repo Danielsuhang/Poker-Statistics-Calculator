@@ -1,4 +1,4 @@
-package Poker;
+package poker;
 
 import static org.junit.Assert.*;
 
@@ -333,7 +333,7 @@ public class Test {
 		System.out.println(game1.calcHandStrength(game1.getMapPlayerHands().get(1)
 				, game1.getCurrentBoard()));
 		
-		assertEquals("Two Pair Aces and Kings -5-", game1.calcHandStrength(game1.getMapPlayerHands().get(1)
+		assertEquals("Two Pair --14-- and -13-        5      ", game1.calcHandStrength(game1.getMapPlayerHands().get(1)
 				, game1.getCurrentBoard()));
 
 	}
@@ -435,6 +435,190 @@ public class Test {
 		assertEquals(1, prob.calcWinner(hand1, hand2, board));
 
 	}
+	@org.junit.Test
+	public void testHandFullHouse() {
+		PokerHand hand1 = new PokerHand("AceClub", "AceHeart");
+		PokerHand hand2 = new PokerHand("KingClub", "QueenClub");
+		Probabilities prob = new Probabilities(hand1, hand2, 2);
+		String[] board = {"ThreeClub", "ThreeSpade", "ThreeHeart", "NineClub", "KingClub"};
+		prob.game.setCurrentBoard(board);
+		//prob.setUpOverallProb();   Because it regenerates the board, it will cause problems 
+		
+		System.out.println(prob.game.calcHandStrength(hand1, prob.game.getCurrentBoard()) + "LOOKHERE");
+		System.out.println(prob.game.calcHandStrength(hand2, prob.game.getCurrentBoard()) + "LOOKHERE");
+		assertEquals(1, prob.calcWinner(hand1, hand2, board));
+
+	}
+	@org.junit.Test
+	public void testHandFourKind() {
+		PokerHand hand1 = new PokerHand("AceClub", "AceHeart");
+		PokerHand hand2 = new PokerHand("KingClub", "KingHeart");
+		Probabilities prob = new Probabilities(hand1, hand2, 2);
+		String[] board = {"ThreeClub", "AceSpade", "ThreeHeart", "AceDiamond", "KingClub"};
+		prob.game.setCurrentBoard(board);
+		//prob.setUpOverallProb();   Because it regenerates the board, it will cause problems 
+		
+		System.out.println(prob.game.calcHandStrength(hand1, prob.game.getCurrentBoard()) + "LOOKHERE");
+		System.out.println(prob.game.calcHandStrength(hand2, prob.game.getCurrentBoard()) + "LOOKHERE");
+		assertEquals(-1, prob.calcWinner(hand2, hand1, board));
+	}
+	@org.junit.Test
+	public void testHandRoyalFlush() {
+		PokerHand hand1 = new PokerHand("AceClub", "KingClub");
+		PokerHand hand2 = new PokerHand("NineClub", "EightClub");
+		Probabilities prob = new Probabilities(hand1, hand2, 2);
+		String[] board = {"QueenClub", "JackClub", "TenClub", "AceDiamond", "TwoClub"};
+		prob.game.setCurrentBoard(board);
+		//prob.setUpOverallProb();   Because it regenerates the board, it will cause problems 
+		
+		System.out.println(prob.game.calcHandStrength(hand1, prob.game.getCurrentBoard()) + "LOOKHERE");
+		System.out.println(prob.game.calcHandStrength(hand2, prob.game.getCurrentBoard()) + "LOOKHERE");
+		assertEquals(-1, prob.calcWinner(hand2, hand1, board));
+	}
+	@org.junit.Test
+	public void testHandTwoPair() {
+		PokerHand hand1 = new PokerHand("AceClub", "AceHeart");
+		PokerHand hand2 = new PokerHand("NineClub", "NineHeart");
+		Probabilities prob = new Probabilities(hand1, hand2, 2);
+		String[] board = {"QueenClub", "QueenHeart", "TenClub", "TwoDiamond", "TwoClub"};
+		prob.game.setCurrentBoard(board);
+		//prob.setUpOverallProb();   Because it regenerates the board, it will cause problems 
+		
+		System.out.println(prob.game.calcHandStrength(hand1, prob.game.getCurrentBoard()) + "LOOKHERE");
+		System.out.println(prob.game.calcHandStrength(hand2, prob.game.getCurrentBoard()) + "LOOKHERE");
+		assertEquals(-1, prob.calcWinner(hand2, hand1, board));
+	}
+	@org.junit.Test
+	public void testHandTwoPair2() {
+		PokerHand hand1 = new PokerHand("AceClub", "TenHeart");
+		PokerHand hand2 = new PokerHand("KingClub", "QueenHeart");
+		Probabilities prob = new Probabilities(hand1, hand2, 2);
+		String[] board = {"AceClub", "QueenClub", "KingHeart", "TwoDiamond", "TwoClub"};
+		prob.game.setCurrentBoard(board);
+		//prob.setUpOverallProb();   Because it regenerates the board, it will cause problems 
+		
+		System.out.println(prob.game.calcHandStrength(hand1, prob.game.getCurrentBoard()) + "TwoPair");
+		System.out.println(prob.game.calcHandStrength(hand2, prob.game.getCurrentBoard()) + "TwoPair");
+		assertEquals(-1, prob.calcWinner(hand2, hand1, board));
+	}
+	@org.junit.Test
+	public void testHandTwoPairHighCard() {
+		PokerHand hand1 = new PokerHand("TenClub", "NineHeart");
+		PokerHand hand2 = new PokerHand("NineClub", "EightHeart");
+		Probabilities prob = new Probabilities(hand1, hand2, 2);
+		String[] board = {"AceClub", "AceHeart", "KingHeart", "KingClub", "TwoClub"};
+		prob.game.setCurrentBoard(board);
+		//prob.setUpOverallProb();   Because it regenerates the board, it will cause problems 
+		
+		System.out.println(prob.game.calcHandStrength(hand1, prob.game.getCurrentBoard()) + "TwoPairHigh");
+		System.out.println(prob.game.calcHandStrength(hand2, prob.game.getCurrentBoard()) + "TwoPairHigh");
+		assertEquals(1, prob.calcWinner(hand1, hand2, board));
+	}
+	@org.junit.Test
+	public void testHandThreePairHighCard() {
+		PokerHand hand1 = new PokerHand("TenClub", "TenHeart");
+		PokerHand hand2 = new PokerHand("JackClub", "EightHeart");
+		Probabilities prob = new Probabilities(hand1, hand2, 2);
+		String[] board = {"AceClub", "AceHeart", "KingHeart", "KingClub", "TwoClub"};
+		prob.game.setCurrentBoard(board);
+		//prob.setUpOverallProb();   Because it regenerates the board, it will cause problems 
+		
+		System.out.println(prob.game.calcHandStrength(hand1, prob.game.getCurrentBoard()) + "TwoPairHigh");
+		System.out.println(prob.game.calcHandStrength(hand2, prob.game.getCurrentBoard()) + "TwoPairHigh");
+		assertEquals(-1, prob.calcWinner(hand1, hand2, board));
+	}
+	@org.junit.Test
+	public void testHandPairHighCard() {
+		PokerHand hand1 = new PokerHand("TenClub", "NineHeart");
+		PokerHand hand2 = new PokerHand("JackClub", "EightHeart");
+		Probabilities prob = new Probabilities(hand1, hand2, 2);
+		String[] board = {"AceClub", "AceHeart", "KingHeart", "QueenClub", "TwoClub"};
+		prob.game.setCurrentBoard(board);
+		//prob.setUpOverallProb();   Because it regenerates the board, it will cause problems 
+		
+		System.out.println(prob.game.calcHandStrength(hand1, prob.game.getCurrentBoard()) + "new");
+		System.out.println(prob.game.calcHandStrength(hand2, prob.game.getCurrentBoard()) + "new");
+		assertEquals(-1, prob.calcWinner(hand1, hand2, board));
+	}
+	@org.junit.Test
+	public void testHighCard() {
+		PokerHand hand1 = new PokerHand("FiveClub", "SixHeart");
+		PokerHand hand2 = new PokerHand("ThreeClub", "FourHeart");
+		Probabilities prob = new Probabilities(hand1, hand2, 2);
+		String[] board = {"AceClub", "JackHeart", "KingHeart", "QueenClub", "NineClub"};
+		prob.game.setCurrentBoard(board);
+		//prob.setUpOverallProb();   Because it regenerates the board, it will cause problems 
+		
+		System.out.println(prob.game.calcHandStrength(hand1, prob.game.getCurrentBoard()) + "   HighCard");
+		System.out.println(prob.game.calcHandStrength(hand2, prob.game.getCurrentBoard()) + "   HighCard");
+		assertEquals(0, prob.calcWinner(hand1, hand2, board));
+	}
+	@org.junit.Test
+	public void testHighCard2() {
+		PokerHand hand1 = new PokerHand("TenHeart", "SixHeart");
+		PokerHand hand2 = new PokerHand("ThreeClub", "FourHeart");
+		Probabilities prob = new Probabilities(hand1, hand2, 2);
+		String[] board = {"AceClub", "JackHeart", "KingHeart", "QueenClub", "NineClub"};
+		prob.game.setCurrentBoard(board);
+		//prob.setUpOverallProb();   Because it regenerates the board, it will cause problems 
+		
+		System.out.println(prob.game.calcHandStrength(hand1, prob.game.getCurrentBoard()) + "   HighCard");
+		System.out.println(prob.game.calcHandStrength(hand2, prob.game.getCurrentBoard()) + "   HighCard");
+		assertEquals(1, prob.calcWinner(hand1, hand2, board));
+	}
+	@org.junit.Test
+	public void TestStraightFlushContingency() {
+		PokerHand hand1 = new PokerHand("NineClub", "SixHeart");
+		PokerHand hand2 = new PokerHand("ThreeClub", "FourHeart");
+		Probabilities prob = new Probabilities(hand1, hand2, 2);
+		String[] board = {"AceClub", "KingClub", "JackClub", "QueenClub", "TenClub"};
+		prob.game.setCurrentBoard(board);
+		//prob.setUpOverallProb();   Because it regenerates the board, it will cause problems 
+		
+		System.out.println(prob.game.calcHandStrength(hand1, prob.game.getCurrentBoard()) + "   HighCard");
+		System.out.println(prob.game.calcHandStrength(hand2, prob.game.getCurrentBoard()) + "   HighCard");
+		assertEquals(0, prob.calcWinner(hand1, hand2, board));
+	}
+	@org.junit.Test
+	public void BasicStrengthTests1() {
+		PokerHand hand1 = new PokerHand("AceClub", "SixHeart");
+		PokerHand hand2 = new PokerHand("NineClub", "FourHeart");
+		Probabilities prob = new Probabilities(hand1, hand2, 2);
+		String[] board = {"EightClub", "KingClub", "JackClub", "QueenClub", "TenClub"};
+		prob.game.setCurrentBoard(board);
+		//prob.setUpOverallProb();   Because it regenerates the board, it will cause problems 
+		
+		System.out.println(prob.game.calcHandStrength(hand1, prob.game.getCurrentBoard()) + "   HighCard");
+		System.out.println(prob.game.calcHandStrength(hand2, prob.game.getCurrentBoard()) + "   HighCard");
+		assertEquals(1, prob.calcWinner(hand1, hand2, board));
+	}
+	@org.junit.Test
+	public void BasicStrengthTests2() {
+		PokerHand hand1 = new PokerHand("AceClub", "AceHeart");
+		PokerHand hand2 = new PokerHand("JackClub", "JackHeart");
+		Probabilities prob = new Probabilities(hand1, hand2, 2);
+		String[] board = {"AceDiamond", "JackDiamond", "QueenHeart", "QueenClub", "TenClub"};
+		prob.game.setCurrentBoard(board);
+		//prob.setUpOverallProb();   Because it regenerates the board, it will cause problems 
+		
+		System.out.println(prob.game.calcHandStrength(hand1, prob.game.getCurrentBoard()) + "   HighCard");
+		System.out.println(prob.game.calcHandStrength(hand2, prob.game.getCurrentBoard()) + "   HighCard");
+		assertEquals(1, prob.calcWinner(hand1, hand2, board));
+	}
+	@org.junit.Test
+	public void BasicStrengthTests3() {  //FullHouse v Flush
+		PokerHand hand1 = new PokerHand("AceClub", "AceHeart");
+		PokerHand hand2 = new PokerHand("TwoDiamond", "ThreeDiamond");
+		Probabilities prob = new Probabilities(hand1, hand2, 2);
+		String[] board = {"AceDiamond", "JackDiamond", "QueenHeart", "QueenClub", "TenDiamond"};
+		prob.game.setCurrentBoard(board);
+		//prob.setUpOverallProb();   Because it regenerates the board, it will cause problems 
+		
+		System.out.println(prob.game.calcHandStrength(hand1, prob.game.getCurrentBoard()) + "   HighCard");
+		System.out.println(prob.game.calcHandStrength(hand2, prob.game.getCurrentBoard()) + "   HighCard");
+		assertEquals(1, prob.calcWinner(hand1, hand2, board));
+	}
+
 
 	
 
