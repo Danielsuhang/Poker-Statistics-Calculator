@@ -1,4 +1,4 @@
-package Poker;
+package poker;
 
 import java.util.HashMap;
 import java.util.Map;
