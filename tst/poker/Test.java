@@ -333,7 +333,7 @@ public class Test {
 		System.out.println(game1.calcHandStrength(game1.getMapPlayerHands().get(1)
 				, game1.getCurrentBoard()));
 		
-		assertEquals("Two Pair Aces and Kings -5-", game1.calcHandStrength(game1.getMapPlayerHands().get(1)
+		assertEquals("Two Pair --14-- and -13-        5      ", game1.calcHandStrength(game1.getMapPlayerHands().get(1)
 				, game1.getCurrentBoard()));
 
 	}
@@ -427,6 +427,20 @@ public class Test {
 		PokerHand hand2 = new PokerHand("KingClub", "QueenClub");
 		Probabilities prob = new Probabilities(hand1, hand2, 2);
 		String[] board = {"ThreeClub", "FourClub", "FiveClub", "NineClub", "EightClub"};
+		prob.game.setCurrentBoard(board);
+		//prob.setUpOverallProb();   Because it regenerates the board, it will cause problems 
+		
+		System.out.println(prob.game.calcHandStrength(hand1, prob.game.getCurrentBoard()) + "LOOKHERE");
+		System.out.println(prob.game.calcHandStrength(hand2, prob.game.getCurrentBoard()) + "LOOKHERE");
+		assertEquals(1, prob.calcWinner(hand1, hand2, board));
+
+	}
+	@org.junit.Test
+	public void testHandFullHouse() {
+		PokerHand hand1 = new PokerHand("AceClub", "AceHeart");
+		PokerHand hand2 = new PokerHand("KingClub", "QueenClub");
+		Probabilities prob = new Probabilities(hand1, hand2, 2);
+		String[] board = {"ThreeClub", "ThreeSpade", "ThreeHeart", "NineClub", "KingClub"};
 		prob.game.setCurrentBoard(board);
 		//prob.setUpOverallProb();   Because it regenerates the board, it will cause problems 
 		

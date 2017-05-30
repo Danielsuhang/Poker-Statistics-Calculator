@@ -394,7 +394,7 @@ public class Game {
 					break;
 				}
 			}
-			return "Two Pair " + convertStr(maxTwo) + "s" + " and " + convertStr(secondMaxTwo) + "s -" + twoPairExtra + "-";
+			return "Two Pair --" + (maxTwo) + "--" + " and -" + (secondMaxTwo) + "-        " + twoPairExtra + "      ";
 		}
 		if (two) {
 			int[] twoReturn = new int[5];
