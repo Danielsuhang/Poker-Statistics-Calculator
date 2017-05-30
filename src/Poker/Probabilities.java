@@ -202,8 +202,8 @@ public class Probabilities {
 				else if (mainStrength.contains("Two Pair")) {
 					int[] mainHigh = game.checkFullHouse(mainStrength);  
 					int[] competeHigh = game.checkFullHouse(competeStrength);
-					String newMainStr = mainStrength.substring(23, 26);
-					String newCompeteStr = competeStrength.substring(23, 34);
+					String newMainStr = mainStrength.substring(24, 35);
+					String newCompeteStr = competeStrength.substring(23, 35);
 					if (mainHigh[0] > competeHigh[0]) {
 						return 1;
 					}
@@ -245,7 +245,7 @@ public class Probabilities {
 					}
 					else {
 						int onePairArrayChecker = 0;
-						while (onePairArrayChecker <= 2) {
+						while (onePairArrayChecker <= 3) {
 							if (mainHigh[onePairArrayChecker] > competeHigh[onePairArrayChecker]) {
 								return 1;
 							}
