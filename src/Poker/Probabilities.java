@@ -49,7 +49,7 @@ public class Probabilities {
 	}
 	public void setUpOverallProb() {   
 		//Add a loop here and do this many many times
-		for (int i = 0; i < 10000; i++) {
+		for (int i = 0; i < (numPlayers * 5000); i++) {
 			boolean tieBool = false; 
 			boolean win = true;
 			game.giveInitial();  //This part of the method keeps giving opponents randomhands

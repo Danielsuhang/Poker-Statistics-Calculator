@@ -29,10 +29,25 @@ public class Main {
 //		
 //
 //		
-//		Probabilities compareTwo = new Probabilities (badHand, compare, 2);
-//		compareTwo.setUpOverallProb();
-//		String otherProb = compareTwo.calcProb();
-//		System.out.println("SameHand "  + otherProb);
+//		game1.setPlayerHands(playerHands);
+//		game1.setCurrentBoard(board);
+//		System.out.println(game1.calcHandStrength(game1.getMapPlayerHands().get(1)
+//				, game1.getCurrentBoard()));
+		
+	
+		PokerHand goodHand = new PokerHand("AceClub", "AceDiamond");
+		PokerHand compare = new PokerHand("TwoDiamond", "SevenClub");
+		
+
+		
+		Probabilities compareTwo = new Probabilities (goodHand, compare, 2);
+		Probabilities compareOne = new Probabilities (goodHand, 10);
+		compareTwo.setUpOverallProb();
+		compareOne.setUpOverallProb();
+		String oneProb = compareOne.calcProb();
+		String otherProb = compareTwo.calcProb();
+		System.out.println("Comparing Two Hands"  + otherProb);
+		System.out.println("Chances Pocket Aces win against 9 other people: " + oneProb);
 		
 		
 	
