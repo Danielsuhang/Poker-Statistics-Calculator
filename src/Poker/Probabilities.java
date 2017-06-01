@@ -1,5 +1,11 @@
 package poker;
 
+import static poker.utils.PokerUtils.checkFullHouse;
+import static poker.utils.PokerUtils.convertHighCards;
+import static poker.utils.PokerUtils.convertInt;
+import static poker.utils.PokerUtils.convertStrAdvanced;
+import static poker.utils.PokerUtils.numericalHandStrength;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -108,17 +114,17 @@ public class Probabilities {
 			return -1;
 		}
 		else {
-			if (game.convertInt(mainStrength) > game.convertInt(competeStrength)) {
+			if (convertInt(mainStrength) > convertInt(competeStrength)) {
 				return 1;
 			}
-			else if (game.convertInt(mainStrength) < game.convertInt(competeStrength)){
+			else if (convertInt(mainStrength) < convertInt(competeStrength)){
 				return -1;
 			}
 			else {
 				//This block is run if the "same" strength hand is acheived. We need to look at high card if this occurs
 				if (mainStrength.contains("Straight") || mainStrength.contains("Four of a Kind")) {  //For both straight flush and normal straight
-					int[] mainHigh = game.convertHighCards(mainStrength); //Only gives us high card
-					int[] competeHigh = game.convertHighCards(competeStrength);
+					int[] mainHigh = convertHighCards(mainStrength); //Only gives us high card
+					int[] competeHigh = convertHighCards(competeStrength);
 					if (mainHigh[0] > competeHigh[0]) {
 						return 1;
 					}
@@ -130,8 +136,8 @@ public class Probabilities {
 					}
 				}
 				else if (mainStrength.contains("FullHouse")) {
-					int[] mainHigh = game.checkFullHouse(mainStrength);
-					int[] competeHigh = game.checkFullHouse(competeStrength);
+					int[] mainHigh = checkFullHouse(mainStrength);
+					int[] competeHigh = checkFullHouse(competeStrength);
 					if (mainHigh[0] > competeHigh[0]) {
 						return 1;
 					}
@@ -151,10 +157,10 @@ public class Probabilities {
 					}
 				}
 				else if (mainStrength.contains("Three of a Kind")) { //For three of a kind, two pair, one pair, high card
-					int mainMaxThree = game.convertStrAdvanced(mainStrength);
-					int competeMaxThree = game.convertStrAdvanced(competeStrength);
-					int[] mainHigh = game.convertHighCards(mainStrength);  
-					int[] competeHigh = game.convertHighCards(competeStrength);
+					int mainMaxThree = convertStrAdvanced(mainStrength);
+					int competeMaxThree = convertStrAdvanced(competeStrength);
+					int[] mainHigh = convertHighCards(mainStrength);  
+					int[] competeHigh = convertHighCards(competeStrength);
 					if (mainMaxThree > competeMaxThree) {  //Checking which triple is higher
 						return 1;
 					}
@@ -183,8 +189,8 @@ public class Probabilities {
 					}
 				}
 				else if (mainStrength.contains("Flush")) {   
-					int[] mainHigh = game.convertHighCards(mainStrength);  
-					int[] competeHigh = game.convertHighCards(competeStrength);
+					int[] mainHigh = convertHighCards(mainStrength);  
+					int[] competeHigh = convertHighCards(competeStrength);
 					int flushArrayChecker = 0;
 					while (flushArrayChecker <= 4) {
 						if (mainHigh[flushArrayChecker] > competeHigh[flushArrayChecker]) {
@@ -200,8 +206,8 @@ public class Probabilities {
 					return 0;
 				}
 				else if (mainStrength.contains("Two Pair")) {
-					int[] mainHigh = game.checkFullHouse(mainStrength);  
-					int[] competeHigh = game.checkFullHouse(competeStrength);
+					int[] mainHigh = checkFullHouse(mainStrength);  
+					int[] competeHigh = checkFullHouse(competeStrength);
 					String newMainStr = mainStrength.substring(24, 35);
 					String newCompeteStr = competeStrength.substring(23, 35);
 					if (mainHigh[0] > competeHigh[0]) {
@@ -218,10 +224,10 @@ public class Probabilities {
 							return -1;   //Three of a kind same, but pair is different
 						}
 						else {
-							if (game.convertInt(newMainStr) > game.convertInt(newCompeteStr)) {
+							if (convertInt(newMainStr) > convertInt(newCompeteStr)) {
 								return 1;
 							}
-							else if (game.convertInt(newMainStr) < game.convertInt(newCompeteStr)) {
+							else if (convertInt(newMainStr) < convertInt(newCompeteStr)) {
 								return -1;
 							}
 							else {
@@ -233,10 +239,10 @@ public class Probabilities {
 
 				}
 				else if (mainStrength.contains("One Pair")) {
-					int mainPair = game.convertInt(mainStrength);
-					int competePair = game.convertInt(competeStrength);
-					int[] mainHigh = game.convertHighCards(mainStrength);  
-					int[] competeHigh = game.convertHighCards(competeStrength);
+					int mainPair = convertInt(mainStrength);
+					int competePair = convertInt(competeStrength);
+					int[] mainHigh = convertHighCards(mainStrength);  
+					int[] competeHigh = convertHighCards(competeStrength);
 					if (mainPair > competePair) {
 						return 1;
 					}
@@ -260,8 +266,8 @@ public class Probabilities {
 					}
 				}
 				else {  //No hand
-					int[] mainHigh = game.convertHighCards(mainStrength);  
-					int[] competeHigh = game.convertHighCards(competeStrength);
+					int[] mainHigh = convertHighCards(mainStrength);  
+					int[] competeHigh = convertHighCards(competeStrength);
 					int noPairArrayChecker = 6;
 					while (noPairArrayChecker >= 0) {
 						if (mainHigh[noPairArrayChecker] > competeHigh[noPairArrayChecker]) {
@@ -280,23 +286,4 @@ public class Probabilities {
 			}
 		}
 	}
-
-
-	public int numericalHandStrength (String handLevel) {
-		if (handLevel.contains("High Card")) return 1;
-		if (handLevel.contains("One Pair")) return 2;
-		if (handLevel.contains("Two Pair")) return 3;
-		if (handLevel.contains("Three of a Kind")) return 4;
-		if (handLevel.contains("Straight")) return 5;
-		if (handLevel.contains("Flush")) return 6;
-		if (handLevel.contains("FullHouse")) return 7;
-		if (handLevel.contains("Four of a Kind")) return 8;
-		if (handLevel.contains("StraightFlush")) return 9;
-		if (handLevel.contains("ROYALFLUSH")) return 10;
-
-		return -1;
-	}
-
-
-
 }

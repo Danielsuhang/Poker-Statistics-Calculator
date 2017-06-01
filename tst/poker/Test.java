@@ -12,10 +12,6 @@ public class Test {
 
 	@Before
 	public void setUp() throws Exception {
-		
-		
-		
-		
 	}
 
 	@After
