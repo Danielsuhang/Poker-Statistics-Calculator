@@ -6,48 +6,42 @@ import java.util.Map;
 public class Main {
 
 	public static void main(String[] args) {
-		Game game1 = new Game();
-		game1.setPlayers(1);
-		Map<Integer, PokerHand> playerHands = new HashMap<>();
-		playerHands.put(1, new PokerHand("AceDiamond", "ThreeDiamond"));
-		String[] board = {
-				"FourDiamond", 
-				"EightSpade",
-				"SevenHeart",
-				"TenClub",
-				"KingHeart"				
-		};
+		//This program gives you the option of finding out a win percentage against a specific hand (or hands)
+		//    for example: (Ace Ace v. Two Seven)
 		
-		game1.setPlayerHands(playerHands);
-		game1.setCurrentBoard(board);
-		System.out.println(game1.calcHandStrength(game1.getMapPlayerHands().get(1)
-				, game1.getCurrentBoard()));
+		//It also allows you to find the percentage chance of winning with a specific hand against a number of opponents
+		//The opponent's hands are generated RANDOMLY. 
+		//Note: The program will NOT give already used cards to any of your opponents nor will it use them as cards on the board
 		
-	
-//		PokerHand badHand = new PokerHand("AceHeart", "AceDiamond");
-//		PokerHand compare = new PokerHand("TwoDiamond", "SevenClub");
-//		
-//
-//		
-//		game1.setPlayerHands(playerHands);
-//		game1.setCurrentBoard(board);
-//		System.out.println(game1.calcHandStrength(game1.getMapPlayerHands().get(1)
-//				, game1.getCurrentBoard()));
+		//To calculate a percentage of a specific hand against a specific hand, create two PokerHand instances, and 
+		//give them a card value and suit. Please use upper case for the card type and suit i.e: AceHeart or TwoClub
 		
-	
-		PokerHand goodHand = new PokerHand("AceClub", "AceDiamond");
-		PokerHand compare = new PokerHand("TwoDiamond", "SevenClub");
+		//Then create an instance of Probabilities and first put in hand you want percentage win for, then hand you're comparing
+		//with, then put in the number of players in the hand. I.e: Probabilities name = new Probabilities (mainhand, comparehand)
+		// If you want to add in additional random hands in, then include the num of players as the third parameter 
+		
+		//If you want to compare ONE specific hand with several random hands, then simply put in the PokerHand instance as the 
+		//first parameter and then the number of people (INCLUDING YOURSELF) in the hand.
+		
+		//Note: This program is assuming no one folds at all until you reach the turn. This will give you a good idea on how good the hand
+		//strength is until the end
+		
+		//Features in-progress of being added in:
+		//Calculating percentage of winning JUST ON THE FLOP, Supporting comparing one main hand with more than one other specific hand
+		//Supporting hand ranges
 		
 
 		
-		Probabilities compareTwo = new Probabilities (goodHand, compare, 2);
-		Probabilities compareOne = new Probabilities (goodHand, 10);
-		compareTwo.setUpOverallProb();
-		compareOne.setUpOverallProb();
-		String oneProb = compareOne.calcProb();
-		String otherProb = compareTwo.calcProb();
-		System.out.println("Comparing Two Hands"  + otherProb);
-		System.out.println("Chances Pocket Aces win against 9 other people: " + oneProb);
+	
+		PokerHand goodHand = new PokerHand("AceClub", "AceDiamond");
+		
+
+		for (int i = 2; i <= 10; i++) {
+			Probabilities compareOne = new Probabilities (goodHand, i);
+			System.out.println("Chances Pocket Aces win against " + (i - 1) +  " other person: " + compareOne.calculatePercentage());
+		}
+		
+		
 		
 		
 	

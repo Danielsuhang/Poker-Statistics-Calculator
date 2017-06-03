@@ -6,6 +6,7 @@ import static poker.utils.PokerUtils.convertInt;
 import static poker.utils.PokerUtils.convertStrAdvanced;
 import static poker.utils.PokerUtils.numericalHandStrength;
 
+import java.text.DecimalFormat;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -30,6 +31,7 @@ public class Probabilities {
 		initialize.put(0, mainHand);
 		game.setPlayerHands(initialize);   
 	}
+
 	public Probabilities (PokerHand mainHand, PokerHand compare, int numPlayers) {
 		if (!(numPlayers < 2)) {
 			this.mainHand = mainHand;    //Constructor adds two hands to initialized hands, won't change with simulations
@@ -43,6 +45,24 @@ public class Probabilities {
 			game.setPlayerHands(initialize);   
 		}
 	}
+	public Probabilities (PokerHand mainHand, PokerHand compare) {
+
+		this.mainHand = mainHand;    //Constructor adds two hands to initialized hands, won't change with simulations
+		this.compare = compare;
+		this.numPlayers = 2;
+		game = new Game (numPlayers);
+		Map<Integer, PokerHand> initialize = new HashMap<>();
+		initialize.put(0, mainHand);
+		initialize.put(1, compare);
+
+		game.setPlayerHands(initialize);   
+
+	}
+	public String calculatePercentage () {
+		setUpOverallProb();
+		return calcProb();
+	}
+
 	public void setDefinedHands (PokerHand other) {
 		game.addPlayerHands(other);
 
@@ -94,9 +114,10 @@ public class Probabilities {
 		}
 	}
 	public String calcProb() {
-		double winProb = wins / total;
-		double tieProb = tie / total;
-		return "Win Probability: " + winProb + " Tie Probability: " + tieProb;
+		double winProb = (wins / total) * 100;
+		double tieProb = (tie / total) * 100;
+		DecimalFormat df = new DecimalFormat("#.##");
+		return "Win Probability: " + df.format(winProb) + "% Tie Probability: " + df.format(tieProb) + "%";
 	}
 	public int calcWinner (PokerHand main, PokerHand compete, String[] board) {
 		//if main wins, return 1 
