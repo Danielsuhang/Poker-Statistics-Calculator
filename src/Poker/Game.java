@@ -16,6 +16,7 @@ public class Game {
     int numPlayers;
     int counter = 0;
     public int numOfCardsBoard = 0;
+    HandGenerator gen = new HandGenerator();
 
 
     public Game(int players) {
@@ -45,14 +46,28 @@ public class Game {
         numOfCardsBoard = 3;
     }
 
-    public void turn() {
-        currentBoard[3] = generateHand();
-        numOfCardsBoard = 4;
+    public void turn() {  //Flop must be called before this
+    	if (currentBoard[0] == null || currentBoard[1] == null || currentBoard[2] == null) {
+    		System.err.println("Warning: You must call flop() method before calling turn()");
+    	}
+    	else {
+    		currentBoard[3] = generateHand();
+            numOfCardsBoard = 4;
+    	}
+        
     }
 
     public void river() {
-        currentBoard[4] = generateHand();
-        numOfCardsBoard = 5;
+    	if (currentBoard[0] == null || currentBoard[1] == null 
+    			|| currentBoard[2] == null || currentBoard[3] == null) {
+    		System.err.println("Warning: You must call flop() and turn() method "
+    				+ "before calling river()");
+    	}
+    	else {
+    		currentBoard[4] = generateHand();
+            numOfCardsBoard = 5;
+    	}
+        
     }
 
     public List<String> getUsedHands() {
@@ -61,6 +76,33 @@ public class Game {
 
     public Map<Integer, PokerHand> getPokerHands() {
         return playerHands;
+    }
+    //Note, when setting Good Poker, DO NOT INCLUDE A SUIT FOR THE HANDS
+    //When you are defining a set of good hands
+    public void setGoodPokerHand(PokerHand[] goodHands) {
+    	gen.setGoodHandRange(goodHands);
+    }
+    public PokerHand generateGoodPokerHands() {
+    	while (usedHands.size() < 52) {
+    		PokerHand hand = gen.getGoodHand();
+    		String tempGoodHand1 = hand.getCard1();
+    		String tempGoodHand2 = hand.getCard2();
+    		if ((!usedHands.contains(tempGoodHand1)) && !(usedHands.contains(tempGoodHand2))) {
+    			usedHands.add(tempGoodHand1);
+    			usedHands.add(tempGoodHand2);
+    			return hand;
+    		}
+    		
+    	}  //Since we generate two cards at a time
+    	//How do we counter against 
+    	System.err.println("All Cards have been used");
+    	return null;
+
+    }
+    public void giveGoodInitial() {
+    	while (counter < numPlayers) {
+    		playerHands.put(counter++, generateGoodPokerHands());
+    	}
     }
 
     public void addPlayerHands(PokerHand additionalPlayer) {
@@ -71,16 +113,15 @@ public class Game {
                 usedHands.add(additionalPlayer.getCard2());
                 counter++;
             } else {
-                System.out.println("ERROR: Not enough cards left to make more hands");
+                System.err.println("ERROR: Not enough cards left to make more hands");
             }
         } else {
-            System.out.println("These cards has been used already, cannot be dealt again");
+            System.err.println("These cards has been used already, cannot be dealt again");
         }
 
     }
 
     public PokerHand generatePair() {  //Process prevents repeats
-        HandGenerator gen = new HandGenerator();
         while (usedHands.size() < 53) {  //Gives all players hands
             String tempHand1 = gen.giveCard();
             if (!usedHands.contains(tempHand1)) {
@@ -102,7 +143,6 @@ public class Game {
     }
 
     public String generateHand() {
-        HandGenerator gen = new HandGenerator();
         while (usedHands.size() < 53) {
             String tempHand = gen.giveCard();
             if (!usedHands.contains(tempHand)) {
@@ -113,6 +153,7 @@ public class Game {
         }
         return null;
     }
+
 
     public String[] getStringPlayerHands() {
         String[] playHands = new String[numPlayers];
@@ -132,7 +173,6 @@ public class Game {
         int highCardS3 = 0;
         String[] suits = new String[7];
 
-        int highCardF = 0;
         String highestSuit = "";
         String[] sevenCards =
             {person.getCard1(), person.getCard2(), currentBoard[0], currentBoard[1], currentBoard[2], currentBoard[3],
@@ -188,18 +228,7 @@ public class Game {
                     }
                 }
 
-                //Now we must find largest value in suits to find highCardF
-                int max = 0;
-                for (int l = 0; l < suits.length; l++) {
-                    if (!(suits[l] == null)) {
-                        numberSuits[l] = convertInt(suits[l]);
-                    }
-                    if (suits[l] != null && convertInt(suits[l]) > max) {
-                        max = convertInt(suits[l]);
-                    }
-                }
-                highCardF = max;
-                break;
+                
             }
 
         }

@@ -1,7 +1,7 @@
 package poker;
 
-import java.util.HashMap;
-import java.util.Map;
+//import java.util.HashMap;
+//import java.util.Map;
 
 public class Main {
 
@@ -33,13 +33,22 @@ public class Main {
 
 		
 	
-		PokerHand goodHand = new PokerHand("AceClub", "AceDiamond");
+		PokerHand goodHand = new PokerHand("AceClub", "AceHeart");
+		PokerHand[] goodrange = {new PokerHand("Ace", "Ace"), new PokerHand("King", "King")};
+		
+		
+		//Other one was AceClub and AceDiamond
+		Probabilities compareOne = new Probabilities (goodHand, 2);
+		compareOne.game.setGoodPokerHand(goodrange);
+		System.out.println(compareOne.calculatePercentage(true));
 		
 
-		for (int i = 2; i <= 10; i++) {
-			Probabilities compareOne = new Probabilities (goodHand, i);
-			System.out.println("Chances Pocket Aces win against " + (i - 1) +  " other person: " + compareOne.calculatePercentage());
-		}
+//		for (int i = 2; i <= 10; i++) {
+//			Probabilities compareOne = new Probabilities (goodHand, i);
+//			compareOne.game.setGoodPokerHand(goodrange);
+//			System.out.println("Chances Ace King suited win against " + (i - 1) +  " other person: " + compareOne.calculatePercentage(false));
+//		}
+		
 		
 		
 		

@@ -58,8 +58,8 @@ public class Probabilities {
 		game.setPlayerHands(initialize);   
 
 	}
-	public String calculatePercentage () {
-		setUpOverallProb();
+	public String calculatePercentage (boolean goodHands) {
+		setUpOverallProb(goodHands);
 		return calcProb();
 	}
 
@@ -67,57 +67,74 @@ public class Probabilities {
 		game.addPlayerHands(other);
 
 	}
-	public void setUpOverallProb() {   
-		//Add a loop here and do this many many times
-		for (int i = 0; i < (numPlayers * 5000); i++) {
-			boolean tieBool = false; 
-			boolean win = true;
-			game.giveInitial();  //This part of the method keeps giving opponents randomhands
-			game.flop();
-			game.turn();
-			game.river();
+	public void setUpOverallProb(boolean goodPair) {   
 
-			for (Map.Entry<Integer, PokerHand> entry : game.getPokerHands().entrySet()) {
-				if (!(entry.getKey() == 0)) {
-					if (calcWinner(mainHand, entry.getValue(), game.getCurrentBoard()) == -1) {
-						win = false;
-						break;
-					}
-					else if (calcWinner(mainHand, entry.getValue(), game.getCurrentBoard()) == 0) {
-						tieBool = true;
+		//Add a loop here and do this many many times
+
+			for (int i = 0; i < ((numPlayers*.5) * 5000); i++) {   //Loop is run three times, if the whole numbers 
+				boolean tieBool = false; 
+				boolean win = true;
+				if (goodPair) {
+					game.giveGoodInitial();  //Gives opponents a specific range of hands
+				}
+				else {
+					game.giveInitial();  //This part of the method keeps giving opponents randomhands
+				}
+				
+				game.flop();
+				game.turn();
+				game.river();
+
+				for (Map.Entry<Integer, PokerHand> entry : game.getPokerHands().entrySet()) {
+					if (!(entry.getKey() == 0)) {
+						if (calcWinner(mainHand, entry.getValue(), game.getCurrentBoard()) == -1) {
+							win = false;
+							break;
+						}
+						else if (calcWinner(mainHand, entry.getValue(), game.getCurrentBoard()) == 0) {
+							tieBool = true;
+						}
 					}
 				}
-			}
-			total++;   //Total always increases
-			if (win && tieBool) {
-				tie++;
-			}
-			else if (win) {
-				wins++;
-			}
-			else {
-				//If both tieBool and win are false, then we lost
-			}
-			game.newGame(numPlayers); //Resets the game, but you need to 
+				total++;   //Total always increases
+				if (win && tieBool) {
+					tie++;
+				}
+				else if (win) {
+					wins++;
+				}
+				else {
+					//If both tieBool and win are false, then we lost
+				}
+				game.newGame(numPlayers); //Resets the game
+				
+				//Repeats initial process of giving already set hands to certain players
 
-			if (compare != null) {
-				Map<Integer, PokerHand> initialize = new HashMap<>();
-				initialize.put(0, mainHand);
-				game.setPlayerHands(initialize);   
-				setDefinedHands(compare);
+				if (compare != null) {
+					Map<Integer, PokerHand> initialize = new HashMap<>();
+					initialize.put(0, mainHand);
+					game.setPlayerHands(initialize);   
+					setDefinedHands(compare);
+				}
+				else {
+					Map<Integer, PokerHand> initialize = new HashMap<>();
+					initialize.put(0, mainHand);
+					game.setPlayerHands(initialize);  
+				}
 			}
-			else {
-				Map<Integer, PokerHand> initialize = new HashMap<>();
-				initialize.put(0, mainHand);
-				game.setPlayerHands(initialize);  
-			}
-		}
+			
+
+		
 	}
 	public String calcProb() {
 		double winProb = (wins / total) * 100;
 		double tieProb = (tie / total) * 100;
 		DecimalFormat df = new DecimalFormat("#.##");
 		return "Win Probability: " + df.format(winProb) + "% Tie Probability: " + df.format(tieProb) + "%";
+	}
+	public double calcNumProb() {
+		double winProb = (wins / total) * 100;
+		return winProb;
 	}
 	public int calcWinner (PokerHand main, PokerHand compete, String[] board) {
 		//if main wins, return 1 
