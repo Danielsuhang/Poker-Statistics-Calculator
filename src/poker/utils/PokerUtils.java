@@ -7,38 +7,40 @@ public class PokerUtils {
 
     public static int convertInt(String num) {
         if (num == null) return -1;
-        if (num.contains("Ace") || num.contains("14")) return 14;   //Acts as essentially 1 or 14 in straight but only 14 in flush
-        if (num.contains("Ten") || num.contains("10")) return 10;
-        if (num.contains("Jack") || num.contains("11")) return 11;
-        if (num.contains("Queen") || num.contains("12")) return 12;
-        if (num.contains("King") || num.contains("13")) return 13;
-        if (num.contains("Two") || num.contains("2")) return 2;
-        if (num.contains("Three") || num.contains("3")) return 3;
-        if (num.contains("Four") || num.contains("4")) return 4;
-        if (num.contains("Five") || num.contains("5")) return 5;
-        if (num.contains("Six") || num.contains("6")) return 6;
-        if (num.contains("Seven") || num.contains("7")) return 7;
-        if (num.contains("Eight") || num.contains("8")) return 8;
-        if (num.contains("Nine") || num.contains("6")) return 9;
+        String lower = num.toLowerCase();
+        if (lower.contains("ace") || num.contains("14")) return 14;   //Acts as essentially 1 or 14 in straight but only 14 in flush
+        if (lower.contains("ten") || num.contains("10")) return 10;
+        if (lower.contains("jack") || num.contains("11")) return 11;
+        if (lower.contains("queen") || num.contains("12")) return 12;
+        if (lower.contains("king") || num.contains("13")) return 13;
+        if (lower.contains("two") || num.contains("2")) return 2;
+        if (lower.contains("three") || num.contains("3")) return 3;
+        if (lower.contains("four") || num.contains("4")) return 4;
+        if (lower.contains("five") || num.contains("5")) return 5;
+        if (lower.contains("six") || num.contains("6")) return 6;
+        if (lower.contains("seven") || num.contains("7")) return 7;
+        if (lower.contains("eight") || num.contains("8")) return 8;
+        if (lower.contains("nine") || num.contains("6")) return 9;
 
         return -1;
     }
 
     public static int convertStrAdvanced(String num) {
         if (num == null) return -1;
-        if (num.contains("Aces")) return 14;   //Acts as essentially 1 or 14 in straight but only 14 in flush
-        if (num.contains("Twos")) return 2;
-        if (num.contains("Threes")) return 3;
-        if (num.contains("Fours")) return 4;
-        if (num.contains("Fives")) return 5;
-        if (num.contains("Sixs")) return 6;
-        if (num.contains("Sevens")) return 7;
-        if (num.contains("Eights")) return 8;
-        if (num.contains("Nines")) return 9;
-        if (num.contains("Tens")) return 10;
-        if (num.contains("Jacks")) return 11;
-        if (num.contains("Queens")) return 12;
-        if (num.contains("Kings")) return 13;
+        String lower = num.toLowerCase();
+        if (lower.contains("aces")) return 14;   //Acts as essentially 1 or 14 in straight but only 14 in flush
+        if (lower.contains("twos")) return 2;
+        if (lower.contains("threes")) return 3;
+        if (lower.contains("fours")) return 4;
+        if (lower.contains("fives")) return 5;
+        if (lower.contains("sixs")) return 6;
+        if (lower.contains("sevens")) return 7;
+        if (lower.contains("eights")) return 8;
+        if (lower.contains("nines")) return 9;
+        if (lower.contains("tens")) return 10;
+        if (lower.contains("jacks")) return 11;
+        if (lower.contains("queens")) return 12;
+        if (lower.contains("kings")) return 13;
         return -1;
     }
 

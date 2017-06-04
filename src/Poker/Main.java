@@ -10,7 +10,7 @@ public class Main {
 		//    for example: (Ace Ace v. Two Seven)
 		
 		//It also allows you to find the percentage chance of winning with a specific hand against a number of opponents
-		//The opponent's hands are generated RANDOMLY. 
+		//The opponent's hands are generated RANDOMLY.
 		//Note: The program will NOT give already used cards to any of your opponents nor will it use them as cards on the board
 		
 		//To calculate a percentage of a specific hand against a specific hand, create two PokerHand instances, and 
@@ -33,8 +33,11 @@ public class Main {
 
 		
 	
-		PokerHand goodHand = new PokerHand("AceClub", "AceHeart");
-		PokerHand[] goodrange = {new PokerHand("Ace", "Ace"), new PokerHand("King", "King")};
+		PokerHand goodHand = new PokerHand("TwoClub", "AceHeart");
+		PokerHand[] goodrange = {new PokerHand("Ace", "Ace"), new PokerHand("King", "King")
+				, new PokerHand ("Ace", "King", true), new PokerHand ("Ace", "King", false)
+				, new PokerHand ("Queen", "Queen"), new PokerHand("Ace", "Queen", true)
+				, new PokerHand ("Ace", "Queen", false), new PokerHand("Jack", "Jack")};
 		
 		
 		//Other one was AceClub and AceDiamond

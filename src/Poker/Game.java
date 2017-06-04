@@ -188,19 +188,19 @@ public class Game {
         for (int i = 0; i < 7; i++) {   //Calculating Flush
             //0 is heart, 1 is diamond, 2 is spade, 3 is club
 
-            if (sevenCards[i].contains("Heart")) {
+            if (sevenCards[i].toLowerCase().contains("heart")) {
                 suitCount[0]++;
                 if (suitCount[0] > maxSuitCount) {
                     maxSuitCount = suitCount[0];
                     highestSuit = "Heart";
                 }
-            } else if (sevenCards[i].contains("Diamond")) {
+            } else if (sevenCards[i].toLowerCase().contains("diamond")) {
                 suitCount[1]++;
                 if (suitCount[1] > maxSuitCount) {
                     maxSuitCount = suitCount[1];
                     highestSuit = "Diamond";
                 }
-            } else if (sevenCards[i].contains("Spade")) {
+            } else if (sevenCards[i].toLowerCase().contains("spade")) {
                 suitCount[2]++;
                 if (suitCount[2] > maxSuitCount) {
                     maxSuitCount = suitCount[2];

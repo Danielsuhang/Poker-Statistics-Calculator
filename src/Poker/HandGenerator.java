@@ -8,7 +8,7 @@ public class HandGenerator {
 	private static List<String> NAME_LIST = Arrays
 			.asList("Ace", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten", "Jack", "Queen", "King");
 	private static List<String> SUIT_LIST = Arrays.asList("Heart", "Diamond", "Spade", "Club");  
-	private static PokerHand[] goodrange;
+	private static PokerHand[] goodrange; 
 
 	public String giveCard() {
 		final int hand = ThreadLocalRandom.current().nextInt(0, 13);
