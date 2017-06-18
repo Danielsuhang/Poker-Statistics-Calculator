@@ -389,7 +389,7 @@ public class Test {
 		String[] board = {"AceSpade", "AceDiamond", "KingSpade", "KingDiamond", "TwoDiamond"};
 
 		
-		prob.setUpOverallProb();
+		prob.setUpOverallProb(false);
 		assertEquals(1, prob.calcWinner(hand1, hand2, board));
 	}
 	@org.junit.Test

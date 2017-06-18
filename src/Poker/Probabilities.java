@@ -16,6 +16,7 @@ public class Probabilities {
 	//Constructor will take in a poker hand
 	PokerHand mainHand;
 	PokerHand compare;
+	boolean ignore = false;
 	int numPlayers = 0;
 	Game game;
 	double wins = 0;
@@ -27,6 +28,23 @@ public class Probabilities {
 		this.mainHand = mainHand;    //Constructor adds initial hand but doesn't change board state
 		this.numPlayers = numPlayers;
 		game = new Game (numPlayers);
+		Map<Integer, PokerHand> initialize = new HashMap<>();
+		initialize.put(0, mainHand);
+		game.setPlayerHands(initialize);   
+	}
+	public Probabilities(PokerHand mainHand, int numPlayers, PokerHand[] range) {
+		this.mainHand = mainHand;    //Constructor adds initial hand but doesn't change board state
+		if (numPlayers > range.length * 2) {
+			System.err.println("WARNING! Making a range of cards that is ");
+		    System.err.println("close to the number of players may be VERY SLOW or even make the program unrunnable");
+		}
+		if (numPlayers >= range.length * 4) {
+			System.err.println("WARNING! The range is not large enough to distribute to all players");
+			ignore = true;
+		}
+		this.numPlayers = numPlayers;
+		game = new Game (numPlayers);
+		game.setGoodPokerHand(range);
 		Map<Integer, PokerHand> initialize = new HashMap<>();
 		initialize.put(0, mainHand);
 		game.setPlayerHands(initialize);   
@@ -58,6 +76,9 @@ public class Probabilities {
 		game.setPlayerHands(initialize);   
 
 	}
+	public void setRange(PokerHand[] range) {
+		game.setGoodPokerHand(range);
+	}
 	public String calculatePercentage (boolean goodHands) {
 		setUpOverallProb(goodHands);
 		return calcProb();
@@ -71,10 +92,10 @@ public class Probabilities {
 
 		//Add a loop here and do this many many times
 
-			for (int i = 0; i < ((numPlayers*.5) * 5000); i++) {   //Loop is run three times, if the whole numbers 
+			for (int i = 0; i < ((numPlayers*.5) * 10000); i++) {   //Loop is run three times, if the whole numbers 
 				boolean tieBool = false; 
 				boolean win = true;
-				if (goodPair) {
+				if (goodPair && !ignore) {
 					game.giveGoodInitial();  //Gives opponents a specific range of hands
 				}
 				else {

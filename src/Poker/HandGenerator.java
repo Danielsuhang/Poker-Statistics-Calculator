@@ -59,13 +59,32 @@ public class HandGenerator {
 					while (suit1 == suit2);
 					return new PokerHand (genHand.getCard1() + SUIT_LIST.get(suit1),
 							genHand.getCard2() + SUIT_LIST.get(suit2));
-					
-					
 				}
 			}
 		}
 
 
+	}
+	public String[] generateSuit(boolean suited) {
+		String[] solution = new String[2];
+		if (suited) {
+			final int suit = ThreadLocalRandom.current().nextInt(0, 4);
+			solution[0] = SUIT_LIST.get(suit);
+			solution[1] = SUIT_LIST.get(suit);
+			return solution;
+		}
+		else {
+			int suit1;
+			int suit2;
+			do {
+				suit1 = ThreadLocalRandom.current().nextInt(0, 4);
+				suit2 = ThreadLocalRandom.current().nextInt(0, 4);
+			}
+			while (suit1 == suit2);
+			solution[0] = SUIT_LIST.get(suit1);
+			solution[1] = SUIT_LIST.get(suit2);
+			return solution;
+		}
 	}
 
 }
